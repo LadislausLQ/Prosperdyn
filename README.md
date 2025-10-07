@@ -1,5 +1,5 @@
 # Prosperdyn
-A Tool to Describe Dynamics in Prospective Life Cycle Assessment
+Describe Dynamics in Prospective Life Cycle Assessment
 
 Independent modification of background and foreground data for streamlined scenario modelling of time-differentiated life cycle inventories.
 
