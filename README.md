@@ -14,4 +14,5 @@ Lang-Quantzendorff, L., Beermann, M.: Prosperdyn—–a tool to describe dynamic
 The example presented in the journal article can be analysed in the following Jupyter Notebooks:
 1. prosperData defines new dynamic foreground inventories with modified parameters.
 2. prosperInvent calculates the demand for infrastructure and carries out dynamic inventory calculations and static impact assessments.
-3. prosperImpact calculates the aditional radiative forcing for dynamic impact assessment.
+3. prosperImpact calculates the additional radiative forcing for dynamic impact assessment.
+4. The environment premise_2 includes besides premise also [bw2analyzer](https://github.com/conda-forge/bw2analyzer-feedstock)
