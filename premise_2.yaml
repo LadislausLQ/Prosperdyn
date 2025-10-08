@@ -1,0 +1,17 @@
+# in your terminal, run conda: conda env create -f premise_2.yaml
+# or mamba (faster): mamba env create -f premise_1.yaml
+
+name: premise_2
+channels:
+  - romainsacchi
+  - defaults
+  - conda-forge
+  - cmutel
+dependencies:
+  - python=3.10
+  - premise
+  - jupyterlab
+  - matplotlib
+  - unfold
+  - seaborn
+  - bw2analyzer=0.10
