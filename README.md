@@ -8,7 +8,7 @@ Background data for each time step can be imported using [premise](https://githu
 The time-differentiated inventory results can be used for dynamic impact assessment by calculating the additional radiative forcing from greenhouse gas emissions.
 
 All details are discussed in the following publication:
-Lang-Quantzendorff, L., Beermann, M.: Prosperdyn—–a tool to describe dynamic transitions in prospective life cycle assessment. Int J Life Cycle Assess, accepted for publication (2025) 
+Lang-Quantzendorff, L., Beermann, M.: Prosperdyn—–a tool to describe dynamic transitions in prospective life cycle assessment. Int J Life Cycle Assess, (2025) 
 [DOI: 10.1007/s11367-025-02515-x](https://doi.org/10.1007/s11367-025-02515-x)
 
 The example presented in the journal article can be analysed in the following Jupyter Notebooks:
