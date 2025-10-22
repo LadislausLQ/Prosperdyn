@@ -1,7 +1,8 @@
 # Prosperdyn
 Describe Dynamics in Prospective Life Cycle Assessment
 
-Independent modification of background and foreground data for streamlined scenario modelling of time-differentiated life cycle inventories. Approach an environmental target by defining industrial transition paths in the foreground data.
+- Independent modification of background and foreground data for streamlined scenario modelling of time-differentiated life cycle inventories.
+- Approach an environmental target by defining industrial transition paths in the foreground data.
 
 Background data for each time step can be imported using [premise](https://github.com/polca/premise). Foreground data can be created for each time step absolutely or using relative information, which must be defined simultaneously. Data for the required novel infrastructure can be calculated in a coupled separate inventory. Inventory calculations are carried out using methods from [brightway2](https://github.com/brightway-lca/brightway2). Also arbitrary static impact categories can be applied. Foreground scenarios can be modified successively in short time while background data remains unchanged.
 
