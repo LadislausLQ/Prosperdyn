@@ -1,0 +1,217 @@
+#-------------------------------------
+# time span of the calculation
+#-------------------------------------
+initio = np.datetime64('2024-01-01') #
+finis = np.datetime64('2055-01-01')  #
+passus = 1            
+#-------------------------------------
+tempo = np.arange(initio, finis, np.timedelta64(passus, 'Y'), dtype='datetime64[Y]')
+
+# constant demand of functional unit 1000 person kilometer per year
+vfu = []
+for t in tempo:
+    v = 1000 # pkm/a
+    vfu.append(v) 
+    
+tdfu = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(vfu))
+#----------------------------------------------------------------------------------------------------------------------------------------------
+    
+#----------------------------------------------------------------------------------------------------------------------------------------------
+#===================================== Application busses ==========================================
+#------------------------------------------------------------------------------------------------
+tdBusse = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(vfu))
+sumBusse = tdBusse.total
+
+# Begin of bus purchase:
+startTB = np.datetime64('2026-01-01')
+startBED = np.datetime64('2030-01-01') 
+startHFC = np.datetime64('2034-01-01') 
+startBEO = np.datetime64('2042-01-01')
+
+# Discontinue of combustion engines:
+stillICE = np.datetime64('2040-01-01') #
+# Life span of busses
+ld = 12 * np.timedelta64(365, 'D')
+puc = 4 * np.timedelta64(365, 'D')
+
+ldICE = ld
+ldBED = ld
+ldBEO = ld
+ldTB = ld
+ldHFC = ld
+
+dies = (stillICE - initio)
+anni = dies / np.timedelta64(365, 'D') #division by 365.2425 not possible!
+dauerICE = anni.astype(int) # rounded value
+
+#---------------------------------------
+# Fleet size
+gflt = 0.0001875 # at 1 pMm 
+
+# yearly purchase
+flt = 0.000015625 # at 1 pMm 
+volc = 1 # no combustion engines since startBE
+vold = 1
+volo = 1
+volt = 1
+#---------------------------------------
+# Capacity over the whole life span 5 333 333 pkm/Bus
+llei = 1
+
+
+vICE = []
+pICE = []
+eICE = []
+vact = flt * (ldICE / np.timedelta64(365, 'D'))
+for t in tempo:
+    if t < startTB:
+        nv = flt
+        vl = flt
+    elif t < startTB + ldICE:
+        nv = 0
+        vl = flt
+    else: 
+        nv = 0
+        vl = 0
+    vact = vact + nv - vl
+    vICE.append(vact/gflt)
+    pICE.append(nv/llei)
+    eICE.append(vl/llei)
+
+tdICE = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(vICE))
+tpICE = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(pICE))
+teICE = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(eICE))
+sumICE = tdICE.total
+supICE = tpICE.total
+sueICE = teICE.total
+
+vBED = []
+pBED = []
+eBED = []
+vact = 0
+for t in tempo:
+    if t < startBED:
+        nv = 0
+        vl = 0
+    elif t < startHFC:
+        nv = flt
+        vl = 0
+    elif t < startBED + ldBED:
+        nv = 0
+        vl = 0
+    elif t < startHFC + ldBED:
+        nv = 0
+        vl = flt
+    else:
+        nv = 0
+        vl = 0
+    vact = vact + nv - vl
+    vBED.append(vact/gflt)
+    pBED.append(nv/llei)
+    eBED.append(vl/llei)
+
+tdBED = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(vBED))
+tpBED = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(pBED))
+teBED = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(eBED))
+sumBED = tdBED.total
+supBED = tpBED.total
+sueBED = teBED.total
+
+vHFC = []
+pHFC = []
+eHFC = []
+vact = 0
+for t in tempo:
+    if t < startHFC:
+        nv = 0
+        vl = 0
+    elif t < startHFC + puc:
+        nv = flt
+        vl = 0
+    elif t < startHFC + ldHFC:
+        nv = 0
+        vl = 0
+    elif t < startHFC + puc + ldHFC:
+        nv = 0
+        vl = flt
+    else:
+        nv = 0
+        vl = 0
+    vact = vact + nv - vl
+    vHFC.append(vact/gflt)
+    pHFC.append(nv/llei)
+    eHFC.append(vl/llei)
+
+tdHFC = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(vHFC))
+tpHFC = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(pHFC))
+teHFC = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(eHFC))
+sumHFC = tdHFC.total
+supHFC = tpHFC.total
+sueHFC = teHFC.total
+
+vBEO = []
+pBEO = []
+eBEO = []
+vact = 0
+for t in tempo:
+    if t < startBEO:
+        nv = 0
+        vl = 0
+    elif t < startBEO + 2 * puc:
+        nv = flt
+        vl = 0
+    elif t < startBEO + ldBEO:
+        nv = 0
+        vl = 0
+    else:
+        nv = flt
+        vl = flt
+    vact = vact + nv - vl
+    vBEO.append(vact/gflt)
+    pBEO.append(nv/llei)
+    eBEO.append(vl/llei)
+
+tdBEO = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(vBEO))
+tpBEO = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(pBEO))
+teBEO = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(eBEO))
+sumBEO = tdBEO.total
+supBEO = tpBEO.total
+sueBEO = teBEO.total
+
+vTB = []
+pTB = []
+eTB = []
+vact = 0
+for t in tempo:
+    if t < startTB:
+        nv = 0
+        vl = 0
+    elif t < startBED:
+        nv = flt
+        vl = 0
+    elif t < startTB + ldTB:
+        nv = 0
+        vl = 0
+    elif t < startTB + ldTB + puc:
+        nv = flt
+        vl = flt
+    elif t < startTB + 2 * ldTB:
+        nv = 0
+        vl = 0
+    elif t < startTB + 2 * ldTB + puc:
+        nv = flt
+        vl = flt
+    else:
+        nv = 0
+        vl = 0
+    vact = vact + nv - vl
+    vTB.append(vact/gflt)
+    pTB.append(nv/llei)
+    eTB.append(vl/llei)
+
+tdTB = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(vTB))
+tpTB = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(pTB))
+teTB = TemporalDistribution(np.array(tempo, dtype = 'datetime64[Y]'), np.array(eTB))
+sumTB = tdTB.total
+supTB = tpTB.total
+sueTB = teTB.total
